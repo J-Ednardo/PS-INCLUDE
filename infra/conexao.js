@@ -8,4 +8,6 @@ const conexao = mysql.createConnection({
     database: 'bdnoticias'
 })
 
+conexao.connect()
+
 export default conexao
