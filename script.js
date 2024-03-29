@@ -71,8 +71,8 @@ async function loadNewsDetails() {
         const response = await axios.get("http://localhost:3000/noticias/15")
         const noticia = response.data
 
-        document.getElementById('tema').textContent = noticia.titulo || "Título não disponível"
-        document.getElementById('msg').textContent = noticia.conteudo
+        document.getElementById("tema").textContent = noticia[0].tema || "Título não disponível"
+        document.getElementById("msg").textContent = noticia[0].noticia
         if(noticia.imagem && document.querySelector('.postImage')){
             document.querySelector('.postImage').src = noticia.imagem
         }
