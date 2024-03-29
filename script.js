@@ -2,6 +2,10 @@ document.addEventListener('DOMContenteLoaded', function() {
     fetchNews()
 })
 
+window.onload = function () {
+    fetchNews()
+}
+
 async function fetchNews(){
     try{
         const response = await axios.get("http://localhost:3000/noticias")
@@ -14,10 +18,10 @@ async function fetchNews(){
 }
 
 function updateRecentNewsList(noticias) {
-    const recentPostDiv = document.querySelector('.postsrecents')
-    recentPostDiv.innerHTML = ''
+    const recentPostsDiv = document.querySelector('.postsrecents')
+    recentPostsDiv.innerHTML = '';
 
-    noticias.forEach(noticia => {
+    noticias.forEarch(noticia => {
         const newsItem = document.createElement('div')
         newsItem.className = 'news-item'
 
@@ -27,9 +31,20 @@ function updateRecentNewsList(noticias) {
 
         newsItem.appendChild(title)
 
-        recentPostDiv.appendChild(newsItem)
+        recentPostsDiv.appendChild(newsItem)
     })
 }
+
+function updateNewsList(noticias){
+    if(noticias.length > 0){
+        document.getElementById('firstpubli').textContent = noticias[0] ? noticias[0].tema : ''
+        document.getElementById('secondpubli').textContent = noticias[1] ? noticias[1].tema : ''
+        document.getElementById('thirdpubli').textContent = noticias[2] ? noticias[2].tema : ''
+    }else{
+        console.log('Não há notícias para mostrar')
+    }
+}
+
 
 async function addPublish(event) {
     console.log('Função addPublish chamada!')
@@ -52,11 +67,19 @@ async function addPublish(event) {
     }
 }
 
+async function loadNewsDetails() {
+    try{
+        const response = await axios.get("http://localhost:3000/noticias/15")
+        const noticia = response.data
 
+        document.getElementById('tema').textContent = noticia.titulo || "Título não disponível"
+        document.getElementById('msg').textContent = noticia.conteudo
+        if(noticia.imagem && document.querySelector('.postImage')){
+            document.querySelector('.postImage').src = noticia.imagem
+        }
+    }catch(error){
+        console.error('Erro ao carregar os detalhes da notícia', error)
+    }
+}
 
-
-
-
-
-
-
+document.addEventListener('DOMContentLoaded', loadNewsDetails)
