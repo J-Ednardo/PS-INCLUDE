@@ -21,7 +21,11 @@ function updateRecentNewsList(noticias) {
     const recentPostsDiv = document.querySelector('.postsrecents')
     recentPostsDiv.innerHTML = '';
 
-    noticias.forEach(noticia => {
+    const startIndex = noticias.length > 3 ? noticias.length - 3 : 0;
+
+    for (let i = startIndex; i < noticias.length; i++) {
+        const noticia = noticias[i];
+
         const newsItem = document.createElement('div')
         newsItem.className = 'news-item'
 
@@ -32,7 +36,7 @@ function updateRecentNewsList(noticias) {
         newsItem.appendChild(title)
 
         recentPostsDiv.appendChild(newsItem)
-    })
+    }
 }
 
 function updateNewsList(noticias){
@@ -69,11 +73,12 @@ async function addPublish(event) {
 
 async function loadNewsDetails() {
     try{
-        const response = await axios.get("http://localhost:3000/noticias/15")
+        const response = await axios.get(`http://localhost:3000/noticias`)
         const noticia = response.data
-
-        document.getElementById("tema").textContent = noticia[0].tema || "Título não disponível"
-        document.getElementById("msg").textContent = noticia[0].noticia
+        const ultimaNoticia = noticia[noticia.length - 1]
+        
+        document.getElementById("tema").textContent = ultimaNoticia.tema || "Título não disponível"
+        document.getElementById("msg").textContent = ultimaNoticia.noticia
         if(noticia.imagem && document.querySelector('.postImage')){
             document.querySelector('.postImage').src = noticia.imagem
         }
