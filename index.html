@@ -6,13 +6,14 @@
     <title>PS INCLUDE</title>
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body class="body">
     <header class="header">
         <img class="logo_header" src="./assets/logoHeader.svg" alt="Logo do cabeçalho">
     </header>
 
-
+    
     <section class="feed">
         <div class="main">
 
@@ -20,13 +21,13 @@
                 <img src="./assets/logoNewPost.svg" alt="Ícone de novo post">
                 <form action="" method="post" class="formNewPost">
                     <div class="texts">
-                        <textarea class="title" placeholder="Escreva seu tema..."></textarea>
-                        <textarea class="publication" placeholder="Escreva sua publicação..."></textarea>  
+                        <textarea id="title" class="title" placeholder="Escreva seu tema..."></textarea>
+                        <textarea id="publication" class="publication" placeholder="Escreva sua publicação..."></textarea>  
                     </div>
                 
                     <div class="buttons">
-                        <button class="button1">Adicionar imagem <img src="./assets/image.svg" alt="Ícone de imagem"></button>
-                        <button class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
+                        <button id= "addimg1" onclick="getPublish()" class="button1">Adicionar imagem <img src="./assets/image.svg" alt="Ícone de imagem"></button>
+                        <button id= "publish1" onclick="addPublish()" class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
                     </div>
                 </form>
             </div>
@@ -40,30 +41,28 @@
                     </div>
                 </div>
             <div class="descriptionPost">
-                <h1 class="titlePost">Tema Lorem Ipsum</h1>
-                <p class="contentPost">
+                <h1 id="tema" class="titlePost">Tema Lorem Ipsum</h1>
+                <p id="msg" class="contentPost">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus gravida sodales consequat. Curabitur condimentum congue felis eget congue. Fusce sed magna nec sem luctus dictum id at nibh. 
                 </p>
                 <img class="postImage" src="./assets/imagenone.png" alt="Imagem do post">
                 <div class="buttons">
-                    <button class="button1">Adicionar imagem <img src="./assets/image.svg" alt="Ícone de imagem"></button>
-                    <button class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
+                    <button id= "addimg2" onclick="addImage()" class="button1">Adicionar imagem <img src="./assets/image.svg" alt="Ícone de imagem"></button>
+                    <button id= "publish2" onclick="addPublish()" class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
                 </div>
             </div>
 
             </div>
 
-
-        
     </div> 
 
     <div class="recent">
         <div class="recents">
         <h1 class="titlesection">Ultimas publicações</h1>
         <div class="postsrecents">
-            <h2 class="article">TEMA LOREM IPSUM..</h2>
-            <h2 class="article">TEMA LOREM IPSUM..</h2>
-            <h2 class="article">TEMA LOREM IPSUM..</h2>
+            <h2 id= "firstpubli" class="article"></h2>
+            <h2 id= "secondpubli" class="article"></h2>
+            <h2 id= "thirdpubli" class="article"></h2>
         </div>   
         </div>
        
@@ -71,7 +70,6 @@
     </div>
    
 </section>
-  
 
 <footer class="footer">
     <img src="./assets/logoHeader.svg" alt="Logo do rodapé">
@@ -82,5 +80,34 @@
         <img src="./assets/instagram.svg" alt="Ícone do Instagram"> 
     </div>
 </footer>
+
+<script>
+window.onload = function() {
+    fetchNews();
+};
+
+function fetchNews() {
+    axios.get('http://localhost:3000/noticias')
+        .then(function (response) {
+            // Supondo que a resposta seja um array de notícias
+            const noticias = response.data;
+            updateNewsList(noticias);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function updateNewsList(noticias) {
+    if (noticias.length > 0) {
+        // Assume que cada notícia tem 'titulo' e 'conteudo'
+        document.getElementById('firstpubli').textContent = noticias[0] ? noticias[0].titulo : '';
+        document.getElementById('secondpubli').textContent = noticias[1] ? noticias[1].titulo : '';
+        document.getElementById('thirdpubli').textContent = noticias[2] ? noticias[2].titulo : '';
+    } else {
+        console.log('Não há notícias para mostrar');
+    }
+}
+</script>
 </body>
 </html>
