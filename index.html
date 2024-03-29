@@ -6,7 +6,7 @@
     <title>PS INCLUDE</title>
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body class="body">
     <header class="header">
@@ -27,7 +27,7 @@
                 
                     <div class="buttons">
                         <button id= "addimg1" onclick="getPublish()" class="button1">Adicionar imagem <img src="./assets/image.svg" alt="Ícone de imagem"></button>
-                        <button id= "publish1" onclick="addPublish()" class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
+                        <button id= "publish1" onclick="addPublish(event)" class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
                     </div>
                 </form>
             </div>
@@ -48,7 +48,7 @@
                 <img class="postImage" src="./assets/imagenone.png" alt="Imagem do post">
                 <div class="buttons">
                     <button id= "addimg2" onclick="addImage()" class="button1">Adicionar imagem <img src="./assets/image.svg" alt="Ícone de imagem"></button>
-                    <button id= "publish2" onclick="addPublish()" class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
+                    <button id= "publish2" onclick="addPublish(event)" class="button2">Publicar <img src="./assets/log-out.svg" alt="Ícone de publicar"></button>
                 </div>
             </div>
 
@@ -80,34 +80,6 @@
         <img src="./assets/instagram.svg" alt="Ícone do Instagram"> 
     </div>
 </footer>
-
-<script>
-window.onload = function() {
-    fetchNews();
-};
-
-function fetchNews() {
-    axios.get('http://localhost:3000/noticias')
-        .then(function (response) {
-            // Supondo que a resposta seja um array de notícias
-            const noticias = response.data;
-            updateNewsList(noticias);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-function updateNewsList(noticias) {
-    if (noticias.length > 0) {
-        // Assume que cada notícia tem 'titulo' e 'conteudo'
-        document.getElementById('firstpubli').textContent = noticias[0] ? noticias[0].titulo : '';
-        document.getElementById('secondpubli').textContent = noticias[1] ? noticias[1].titulo : '';
-        document.getElementById('thirdpubli').textContent = noticias[2] ? noticias[2].titulo : '';
-    } else {
-        console.log('Não há notícias para mostrar');
-    }
-}
-</script>
+<script src="script.js"></script>
 </body>
 </html>
