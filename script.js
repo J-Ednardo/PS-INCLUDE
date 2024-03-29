@@ -106,6 +106,7 @@ async function deletePublish(event) {
     }
 }
 
+//para atualizar é necessário primeiro escrever nas caixas de texto e depois clicar no botão
 async function updatePublish(event) {
     event.preventDefault()
     console.log('Função updatePublish chamada!')
