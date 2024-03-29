@@ -47,8 +47,8 @@ function updateNewsList(noticias){
 
 
 async function addPublish(event) {
+    event.preventDefault()
     console.log('Função addPublish chamada!')
-
     const title = document.getElementById('title').value
     const publication = document.getElementById('publication').value
     try {
