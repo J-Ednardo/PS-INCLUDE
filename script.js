@@ -61,6 +61,7 @@ async function addPublish(event) {
         console.log('Dados publicados', response.data)
         document.getElementById('title').value = ''
         document.getElementById('publication').value = ''
+        window.location.reload()
     }catch(error){
         console.error('Erro na publicação', error)
     }
