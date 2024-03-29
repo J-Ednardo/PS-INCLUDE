@@ -58,10 +58,9 @@ async function addPublish(event) {
             data: {tema: title, noticia: publication},
             headers: {"Content-Type": "application/json"}
         })
-
         console.log('Dados publicados', response.data)
         document.getElementById('title').value = ''
-        document.getElementById(publication).value = ''
+        document.getElementById('publication').value = ''
     }catch(error){
         console.error('Erro na publicação', error)
     }
